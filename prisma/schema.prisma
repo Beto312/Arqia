@@ -1,0 +1,197 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  CLIENT
+  PROFESSIONAL
+  ADMIN
+}
+
+enum ProjectStatus {
+  BRIEFING
+  GENERATING
+  AI_REVIEW
+  PROFESSIONAL_REVIEW
+  APPROVED
+  EXECUTIVE_PROJECT
+  DELIVERED
+}
+
+enum AIGenerationType {
+  FLOOR_PLAN
+  STRUCTURAL
+  INTERIOR_RENDER
+  MEMORIAL
+  COST_ESTIMATE
+}
+
+model User {
+  id            String   @id @default(cuid())
+  clerkId       String   @unique
+  email         String   @unique
+  name          String?
+  avatarUrl     String?
+  role          UserRole @default(CLIENT)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  profile       Profile?
+  clientProjects    Project[] @relation("ClientProjects")
+  professionalProjects Project[] @relation("ProfessionalProjects")
+  comments      Comment[]
+  approvals     Approval[]
+  subscription  Subscription?
+}
+
+model Profile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio         String?
+  specialties String[]
+  creaNumber  String?
+  cabNumber   String?
+  portfolioUrl String?
+  city        String?
+  state       String?
+  rating      Float    @default(0)
+  reviewCount Int      @default(0)
+  hourlyRate  Float?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Project {
+  id           String        @id @default(cuid())
+  name         String
+  description  String?
+  status       ProjectStatus @default(BRIEFING)
+  clientId     String
+  client       User          @relation("ClientProjects", fields: [clientId], references: [id])
+  professionalId String?
+  professional User?         @relation("ProfessionalProjects", fields: [professionalId], references: [id])
+  briefing     Json?
+  totalArea    Float?
+  address      String?
+  city         String?
+  state        String?
+  estimatedCost Float?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  versions     ProjectVersion[]
+  generations  AIGeneration[]
+  floorPlans   FloorPlan[]
+  structuralPlans StructuralPlan[]
+  interiorScenes  InteriorScene[]
+  comments     Comment[]
+  approvals    Approval[]
+}
+
+model ProjectVersion {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  version   Int
+  snapshot  Json
+  createdAt DateTime @default(now())
+}
+
+model AIGeneration {
+  id          String           @id @default(cuid())
+  projectId   String
+  project     Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  type        AIGenerationType
+  promptInput String           @db.Text
+  rawOutput   Json?
+  status      String           @default("pending")
+  modelUsed   String?
+  tokensUsed  Int?
+  costUsd     Float?
+  errorMessage String?
+  createdAt   DateTime         @default(now())
+  completedAt DateTime?
+}
+
+model FloorPlan {
+  id          String   @id @default(cuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  version     Int      @default(1)
+  svgData     String   @db.Text
+  metadata    Json?
+  isApproved  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model StructuralPlan {
+  id          String   @id @default(cuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  version     Int      @default(1)
+  data        Json
+  isApproved  Boolean  @default(false)
+  disclaimer  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model InteriorScene {
+  id          String   @id @default(cuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  roomName    String
+  style       String?
+  renderUrl   String?
+  sceneData   Json?
+  isApproved  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  content   String   @db.Text
+  anchorX   Float?
+  anchorY   Float?
+  anchorRef String?
+  resolved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Approval {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  stage     String
+  approved  Boolean
+  signatureHash String?
+  notes     String?
+  createdAt DateTime @default(now())
+}
+
+model Subscription {
+  id                 String   @id @default(cuid())
+  userId             String   @unique
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stripeCustomerId   String?  @unique
+  stripeSubscriptionId String? @unique
+  plan               String   @default("free")
+  status             String   @default("active")
+  currentPeriodEnd   DateTime?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
