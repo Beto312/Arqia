@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useRef } from "react";
 import { ZoomIn, ZoomOut, Download, RotateCcw } from "lucide-react";
@@ -25,7 +25,7 @@ export function FloorPlanViewer({ svgData, planId }: Props) {
   return (
     <div className="relative">
       {/* Toolbar */}
-      <div className="flex items-center gap-1 p-2 border-b border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80">
+      <div className="flex items-center gap-1 p-2 border-b border-border bg-surface/80">
         <button
           onClick={() => setZoom((z) => Math.min(z + 0.2, 3))}
           className="p-1.5 rounded hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-600 dark:text-zinc-400 transition-colors"
@@ -51,7 +51,7 @@ export function FloorPlanViewer({ svgData, planId }: Props) {
         <div className="flex-1" />
         <button
           onClick={handleDownload}
-          className="flex items-center gap-1.5 text-xs font-medium text-violet-600 hover:text-violet-700 px-3 py-1.5 rounded-lg hover:bg-violet-50 dark:hover:bg-violet-950/30 transition-colors"
+          className="flex items-center gap-1.5 text-xs font-medium text-primary-600 hover:text-primary-700 px-3 py-1.5 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-950/30 transition-colors"
         >
           <Download className="h-3.5 w-3.5" />
           Baixar SVG
@@ -61,7 +61,7 @@ export function FloorPlanViewer({ svgData, planId }: Props) {
       {/* Canvas */}
       <div
         ref={containerRef}
-        className="overflow-auto bg-zinc-100 dark:bg-zinc-950 p-4"
+        className="overflow-auto bg-surface-alt p-4"
         style={{ maxHeight: "500px" }}
       >
         <div

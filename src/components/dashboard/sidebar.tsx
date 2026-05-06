@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { UserButton } from "@clerk/nextjs";
+import { UserMenu } from "./user-menu";
 import {
   Building2,
   LayoutDashboard,
@@ -27,10 +27,10 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-60 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex flex-col">
-      <div className="p-5 border-b border-zinc-100 dark:border-zinc-800">
+    <aside className="w-60 border-r border-zinc-200 dark:border-zinc-800 bg-surface flex flex-col">
+      <div className="p-5 border-b border-border">
         <Link href="/dashboard" className="flex items-center gap-2">
-          <Building2 className="h-6 w-6 text-violet-600" />
+          <Building2 className="h-6 w-6 text-primary-600" />
           <span className="text-lg font-bold tracking-tight">ArqIA</span>
         </Link>
       </div>
@@ -42,8 +42,8 @@ export function Sidebar() {
             className={cn(
               "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
               pathname === href
-                ? "bg-violet-50 dark:bg-violet-950/40 text-violet-700 dark:text-violet-400"
-                : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-100"
+                ? "bg-primary-50 dark:bg-primary-950/40 text-primary-700 dark:text-primary-400"
+                : "text-zinc-600 dark:text-zinc-400 hover:bg-primary-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-100"
             )}
           >
             <Icon className="h-4 w-4 shrink-0" />
@@ -51,8 +51,8 @@ export function Sidebar() {
           </Link>
         ))}
       </nav>
-      <div className="p-4 border-t border-zinc-100 dark:border-zinc-800">
-        <UserButton />
+      <div className="p-4 border-t border-border">
+        <UserMenu />
       </div>
     </aside>
   );

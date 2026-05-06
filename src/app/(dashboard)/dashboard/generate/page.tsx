@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -118,7 +118,7 @@ export default function GeneratePage() {
     <div className="p-8 max-w-3xl mx-auto">
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-2">
-          <Sparkles className="h-6 w-6 text-violet-600" />
+          <Sparkles className="h-6 w-6 text-primary-600" />
           <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">Gerar projeto com IA</h1>
         </div>
         <p className="text-zinc-500 dark:text-zinc-400">
@@ -134,7 +134,7 @@ export default function GeneratePage() {
               className={cn(
                 "h-7 w-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors",
                 step === s
-                  ? "bg-violet-600 text-white"
+                  ? "bg-primary-600 text-white"
                   : step > s
                   ? "bg-emerald-500 text-white"
                   : "bg-zinc-200 dark:bg-zinc-700 text-zinc-500"
@@ -161,7 +161,7 @@ export default function GeneratePage() {
 
       {/* Step 1: Basic info */}
       {step === 1 && (
-        <div className="space-y-5 bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800">
+        <div className="space-y-5 bg-surface p-6 rounded-2xl border border-border">
           <div>
             <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
               Nome do projeto
@@ -171,7 +171,7 @@ export default function GeneratePage() {
               placeholder="Ex: Casa Família Silva"
               value={briefing.projectName}
               onChange={(e) => setBriefing((b) => ({ ...b, projectName: e.target.value }))}
-              className="w-full border border-zinc-200 dark:border-zinc-700 rounded-lg px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+              className="w-full border border-border rounded-lg px-4 py-2.5 text-sm bg-surface text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
@@ -187,7 +187,7 @@ export default function GeneratePage() {
                 onChange={(e) =>
                   setBriefing((b) => ({ ...b, totalArea: Number(e.target.value) }))
                 }
-                className="w-full border border-zinc-200 dark:border-zinc-700 rounded-lg px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-violet-500"
+                className="w-full border border-border rounded-lg px-4 py-2.5 text-sm bg-surface text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
             </div>
             <div>
@@ -199,7 +199,7 @@ export default function GeneratePage() {
                 onChange={(e) =>
                   setBriefing((b) => ({ ...b, floors: Number(e.target.value) }))
                 }
-                className="w-full border border-zinc-200 dark:border-zinc-700 rounded-lg px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-violet-500"
+                className="w-full border border-border rounded-lg px-4 py-2.5 text-sm bg-surface text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
               >
                 <option value={1}>Térrea (1 pavimento)</option>
                 <option value={2}>Sobrado (2 pavimentos)</option>
@@ -219,7 +219,7 @@ export default function GeneratePage() {
                 onChange={(e) =>
                   setBriefing((b) => ({ ...b, terrainWidth: Number(e.target.value) }))
                 }
-                className="w-full border border-zinc-200 dark:border-zinc-700 rounded-lg px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-violet-500"
+                className="w-full border border-border rounded-lg px-4 py-2.5 text-sm bg-surface text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
             </div>
             <div>
@@ -233,7 +233,7 @@ export default function GeneratePage() {
                 onChange={(e) =>
                   setBriefing((b) => ({ ...b, terrainDepth: Number(e.target.value) }))
                 }
-                className="w-full border border-zinc-200 dark:border-zinc-700 rounded-lg px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-violet-500"
+                className="w-full border border-border rounded-lg px-4 py-2.5 text-sm bg-surface text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
             </div>
           </div>
@@ -249,8 +249,8 @@ export default function GeneratePage() {
                   className={cn(
                     "px-4 py-1.5 rounded-full text-sm font-medium border transition-colors",
                     briefing.style === s
-                      ? "bg-violet-600 text-white border-violet-600"
-                      : "bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 hover:border-zinc-300"
+                      ? "bg-primary-600 text-white border-primary-600"
+                      : "bg-surface border-border text-zinc-600 dark:text-zinc-300 hover:border-zinc-300"
                   )}
                 >
                   {s}
@@ -267,12 +267,12 @@ export default function GeneratePage() {
           {briefing.rooms.map((room, idx) => (
             <div
               key={idx}
-              className="flex items-start gap-3 bg-white dark:bg-zinc-900 p-4 rounded-xl border border-zinc-100 dark:border-zinc-800"
+              className="flex items-start gap-3 bg-surface p-4 rounded-xl border border-border"
             >
               <select
                 value={room.type}
                 onChange={(e) => updateRoom(idx, "type", e.target.value)}
-                className="flex-1 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-violet-500"
+                className="flex-1 border border-border rounded-lg px-3 py-2 text-sm bg-surface text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
               >
                 {ROOM_TYPES.map((rt) => (
                   <option key={rt.value} value={rt.value}>
@@ -288,7 +288,7 @@ export default function GeneratePage() {
                   max={10}
                   value={room.count}
                   onChange={(e) => updateRoom(idx, "count", Number(e.target.value))}
-                  className="w-16 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-violet-500 text-center"
+                  className="w-16 border border-border rounded-lg px-3 py-2 text-sm bg-surface text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-primary-500 text-center"
                 />
               </div>
               <input
@@ -296,7 +296,7 @@ export default function GeneratePage() {
                 placeholder="Observações..."
                 value={room.notes}
                 onChange={(e) => updateRoom(idx, "notes", e.target.value)}
-                className="flex-1 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-violet-500"
+                className="flex-1 border border-border rounded-lg px-3 py-2 text-sm bg-surface text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
               <button
                 onClick={() => removeRoom(idx)}
@@ -308,7 +308,7 @@ export default function GeneratePage() {
           ))}
           <button
             onClick={addRoom}
-            className="flex items-center gap-2 text-sm text-violet-600 hover:text-violet-700 font-medium px-4 py-2.5 border-2 border-dashed border-violet-200 dark:border-violet-800 rounded-xl w-full justify-center transition-colors"
+            className="flex items-center gap-2 text-sm text-primary-600 hover:text-primary-700 font-medium px-4 py-2.5 border-2 border-dashed border-primary-200 dark:border-primary-800 rounded-xl w-full justify-center transition-colors"
           >
             <Plus className="h-4 w-4" />
             Adicionar cômodo
@@ -318,7 +318,7 @@ export default function GeneratePage() {
 
       {/* Step 3: Review */}
       {step === 3 && (
-        <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800 space-y-5">
+        <div className="bg-surface p-6 rounded-2xl border border-border space-y-5">
           <h2 className="font-semibold text-zinc-900 dark:text-zinc-50">Resumo do briefing</h2>
           <div className="grid grid-cols-2 gap-3 text-sm">
             <div>
@@ -354,7 +354,7 @@ export default function GeneratePage() {
                 return (
                   <span
                     key={i}
-                    className="bg-violet-50 dark:bg-violet-950/30 text-violet-700 dark:text-violet-400 text-xs font-medium px-3 py-1 rounded-full border border-violet-100 dark:border-violet-800"
+                    className="bg-primary-50 dark:bg-primary-950/30 text-primary-700 dark:text-primary-400 text-xs font-medium px-3 py-1 rounded-full border border-primary-100 dark:border-primary-800"
                   >
                     {r.count}x {label}
                   </span>
@@ -371,7 +371,7 @@ export default function GeneratePage() {
               placeholder="Ex: varanda nos fundos, piscina, acessibilidade, etc."
               value={briefing.observations}
               onChange={(e) => setBriefing((b) => ({ ...b, observations: e.target.value }))}
-              className="w-full border border-zinc-200 dark:border-zinc-700 rounded-lg px-4 py-2.5 text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-violet-500 resize-none"
+              className="w-full border border-border rounded-lg px-4 py-2.5 text-sm bg-surface text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"
             />
           </div>
           <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 text-sm text-amber-800 dark:text-amber-400">
@@ -394,7 +394,7 @@ export default function GeneratePage() {
         {step < 3 ? (
           <button
             onClick={() => setStep((s) => s + 1)}
-            className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm"
+            className="flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm"
           >
             Próximo
             <ChevronRight className="h-4 w-4" />
@@ -403,7 +403,7 @@ export default function GeneratePage() {
           <button
             onClick={handleGenerate}
             disabled={loading}
-            className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 disabled:opacity-60 text-white font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm"
+            className="flex items-center gap-2 bg-primary-600 hover:bg-primary-700 disabled:opacity-60 text-white font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm"
           >
             {loading ? (
               <>

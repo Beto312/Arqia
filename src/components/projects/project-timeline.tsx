@@ -1,4 +1,4 @@
-import { CheckCircle2, Circle, Loader2 } from "lucide-react";
+﻿import { CheckCircle2, Circle, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -21,7 +21,7 @@ export function ProjectTimeline({ status }: Props) {
   const currentIdx = stageOrder.indexOf(status);
 
   return (
-    <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-xl p-4">
+    <div className="bg-surface border border-border rounded-xl p-4">
       <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 mb-4">Progresso</h3>
       <div className="space-y-3">
         {stages.map((stage, idx) => {
@@ -35,9 +35,9 @@ export function ProjectTimeline({ status }: Props) {
                   <CheckCircle2 className="h-5 w-5 text-emerald-500" />
                 ) : isCurrent ? (
                   status === "GENERATING" ? (
-                    <Loader2 className="h-5 w-5 text-violet-600 animate-spin" />
+                    <Loader2 className="h-5 w-5 text-primary-600 animate-spin" />
                   ) : (
-                    <div className="h-5 w-5 rounded-full border-2 border-violet-600 bg-violet-100 dark:bg-violet-950/40" />
+                    <div className="h-5 w-5 rounded-full border-2 border-primary-600 bg-primary-100 dark:bg-primary-950/40" />
                   )
                 ) : (
                   <Circle className="h-5 w-5 text-zinc-300 dark:text-zinc-600" />
@@ -47,7 +47,7 @@ export function ProjectTimeline({ status }: Props) {
                 className={cn(
                   "text-sm",
                   isDone && "text-emerald-600 dark:text-emerald-400",
-                  isCurrent && "text-violet-700 dark:text-violet-400 font-semibold",
+                  isCurrent && "text-primary-700 dark:text-primary-400 font-semibold",
                   isPending && "text-zinc-400 dark:text-zinc-600"
                 )}
               >

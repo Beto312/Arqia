@@ -1,5 +1,5 @@
-import { auth } from "@clerk/nextjs/server";
-import { redirect, notFound } from "next/navigation";
+﻿import { redirect, notFound } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
 import { db } from "@/lib/db";
 import { FloorPlanViewer } from "@/components/editor/floor-plan-viewer";
 import { ProjectTimeline } from "@/components/projects/project-timeline";
@@ -11,10 +11,11 @@ interface Props {
 
 export default async function ProjectDetailPage({ params }: Props) {
   const { id } = await params;
-  const { userId } = await auth();
-  if (!userId) redirect("/sign-in");
+  const supabase = await createClient();
+  const { data: { user: supabaseUser } } = await supabase.auth.getUser();
+  if (!supabaseUser) redirect("/sign-in");
 
-  const user = await db.user.findUnique({ where: { clerkId: userId } });
+  const user = await db.user.findUnique({ where: { supabaseId: supabaseUser.id } });
   if (!user) redirect("/onboarding");
 
   const project = await db.project.findFirst({
@@ -70,7 +71,7 @@ export default async function ProjectDetailPage({ params }: Props) {
             )}
           </div>
         </div>
-        <span className="text-sm font-medium px-3 py-1.5 bg-violet-100 dark:bg-violet-950/40 text-violet-700 dark:text-violet-400 rounded-full">
+        <span className="text-sm font-medium px-3 py-1.5 bg-primary-100 dark:bg-primary-950/40 text-primary-700 dark:text-primary-400 rounded-full">
           {statusLabels[project.status] || project.status}
         </span>
       </div>
@@ -79,14 +80,14 @@ export default async function ProjectDetailPage({ params }: Props) {
         {/* Main: Floor plan */}
         <div className="col-span-2 space-y-5">
           {project.status === "GENERATING" ? (
-            <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-12 text-center">
-              <div className="h-12 w-12 border-4 border-violet-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <div className="bg-surface border border-border rounded-2xl p-12 text-center">
+              <div className="h-12 w-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
               <p className="text-zinc-600 dark:text-zinc-400 font-medium">Gerando planta baixa com IA...</p>
               <p className="text-zinc-400 text-sm mt-1">Isso pode levar alguns segundos.</p>
             </div>
           ) : latestPlan ? (
-            <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl overflow-hidden">
-              <div className="p-4 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+            <div className="bg-surface border border-border rounded-2xl overflow-hidden">
+              <div className="p-4 border-b border-border flex items-center justify-between">
                 <h2 className="font-semibold text-zinc-900 dark:text-zinc-50">Planta Baixa</h2>
                 <span className="text-xs text-zinc-400">Versão {latestPlan.version}</span>
               </div>
@@ -100,7 +101,7 @@ export default async function ProjectDetailPage({ params }: Props) {
               </div>
             </div>
           ) : (
-            <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-12 text-center text-zinc-500">
+            <div className="bg-surface border border-border rounded-2xl p-12 text-center text-zinc-500">
               Nenhuma planta gerada ainda.
             </div>
           )}
@@ -114,14 +115,14 @@ export default async function ProjectDetailPage({ params }: Props) {
             return (
               <div className="grid grid-cols-2 gap-4">
                 {meta.observations && meta.observations.length > 0 && (
-                  <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-xl p-4">
+                  <div className="bg-surface border border-border rounded-xl p-4">
                     <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 mb-2">
                       Observações da IA
                     </h3>
                     <ul className="text-sm text-zinc-600 dark:text-zinc-400 space-y-1">
                       {meta.observations.map((o, i) => (
                         <li key={i} className="flex items-start gap-1.5">
-                          <span className="text-violet-500 mt-0.5">•</span> {o}
+                          <span className="text-primary-500 mt-0.5">•</span> {o}
                         </li>
                       ))}
                     </ul>
@@ -149,7 +150,7 @@ export default async function ProjectDetailPage({ params }: Props) {
           <ProjectTimeline status={project.status} />
 
           {briefing && (
-            <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-xl p-4">
+            <div className="bg-surface border border-border rounded-xl p-4">
               <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 mb-3">Briefing</h3>
               <dl className="space-y-2 text-sm">
                 <div className="flex justify-between">

@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+﻿import { db } from "@/lib/db";
 import { Star, MapPin, Award } from "lucide-react";
 import Link from "next/link";
 
@@ -10,9 +10,9 @@ export default async function MarketplacePage() {
   });
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-white dark:bg-zinc-900 border-b border-zinc-100 dark:border-zinc-800">
+      <div className="bg-surface border-b border-border">
         <div className="mx-auto max-w-7xl px-6 py-8">
           <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">
             Profissionais Habilitados
@@ -33,10 +33,10 @@ export default async function MarketplacePage() {
             {professionals.map((pro) => (
               <div
                 key={pro.id}
-                className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-6 hover:border-violet-200 dark:hover:border-violet-800 transition-colors"
+                className="bg-surface border border-border rounded-2xl p-6 hover:border-primary-200 dark:hover:border-primary-800 transition-colors"
               >
                 <div className="flex items-start gap-3 mb-4">
-                  <div className="h-12 w-12 bg-violet-100 dark:bg-violet-950/40 rounded-full flex items-center justify-center text-lg font-bold text-violet-700 dark:text-violet-400">
+                  <div className="h-12 w-12 bg-primary-100 dark:bg-primary-950/40 rounded-full flex items-center justify-center text-lg font-bold text-primary-700 dark:text-primary-400">
                     {(pro.name || pro.email)[0].toUpperCase()}
                   </div>
                   <div>
@@ -76,7 +76,7 @@ export default async function MarketplacePage() {
                 )}
                 <Link
                   href={`/marketplace/${pro.id}`}
-                  className="block text-center w-full border border-violet-200 dark:border-violet-800 text-violet-700 dark:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-950/30 font-medium py-2 rounded-lg text-sm transition-colors"
+                  className="block text-center w-full border border-primary-200 dark:border-primary-800 text-primary-700 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-950/30 font-medium py-2 rounded-lg text-sm transition-colors"
                 >
                   Ver perfil
                 </Link>

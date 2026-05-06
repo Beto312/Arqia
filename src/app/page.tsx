@@ -1,23 +1,24 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { ArrowRight, Building2, Cpu, Users, FileText, Star, CheckCircle2 } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-zinc-950">
+    <div className="min-h-screen bg-background">
       {/* Nav */}
-      <header className="border-b border-zinc-100 dark:border-zinc-800">
+      <header className="border-b border-border">
         <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <Building2 className="h-6 w-6 text-violet-600" />
+            <Building2 className="h-6 w-6 text-primary-600" />
             <span className="text-xl font-bold tracking-tight">ArqIA</span>
           </Link>
           <nav className="hidden md:flex items-center gap-8 text-sm text-zinc-600 dark:text-zinc-400">
             <Link href="#features" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Funcionalidades</Link>
-            <Link href="#how-it-works" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Como Funciona</Link>
             <Link href="/marketplace" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Profissionais</Link>
             <Link href="/pricing" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Planos</Link>
           </nav>
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <Link
               href="/sign-in"
               className="text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
@@ -26,7 +27,7 @@ export default function HomePage() {
             </Link>
             <Link
               href="/sign-up"
-              className="text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded-lg transition-colors"
+              className="text-sm font-semibold bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors"
             >
               Começar grátis
             </Link>
@@ -36,14 +37,14 @@ export default function HomePage() {
 
       {/* Hero */}
       <section className="mx-auto max-w-7xl px-6 py-24 text-center">
-        <div className="inline-flex items-center gap-2 bg-violet-50 dark:bg-violet-950/30 text-violet-700 dark:text-violet-400 text-xs font-semibold px-3 py-1.5 rounded-full mb-8 border border-violet-200 dark:border-violet-800">
+        <div className="inline-flex items-center gap-2 bg-primary-50 dark:bg-primary-950/30 text-primary-700 dark:text-primary-400 text-xs font-semibold px-3 py-1.5 rounded-full mb-8 border border-primary-200 dark:border-primary-800">
           <Cpu className="h-3.5 w-3.5" />
           Powered by Claude AI
         </div>
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 mb-6 leading-tight">
           Projetos de arquitetura
           <br />
-          <span className="text-violet-600">gerados por IA</span>
+          <span className="text-primary-600">gerados por IA</span>
         </h1>
         <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed">
           Descreva sua obra em linguagem natural. A ArqIA gera plantas baixas,
@@ -53,14 +54,14 @@ export default function HomePage() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/sign-up"
-            className="inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white font-semibold px-8 py-4 rounded-xl transition-colors text-base"
+            className="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold px-8 py-4 rounded-xl transition-colors text-base"
           >
             Gerar meu projeto agora
             <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             href="/marketplace"
-            className="inline-flex items-center gap-2 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 text-zinc-700 dark:text-zinc-300 font-semibold px-8 py-4 rounded-xl transition-colors text-base"
+            className="inline-flex items-center gap-2 border border-border hover:border-zinc-300 dark:hover:border-zinc-600 text-zinc-700 dark:text-zinc-300 font-semibold px-8 py-4 rounded-xl transition-colors text-base"
           >
             <Users className="h-4 w-4" />
             Encontrar profissionais
@@ -84,7 +85,7 @@ export default function HomePage() {
       </section>
 
       {/* Features */}
-      <section id="features" className="bg-zinc-50 dark:bg-zinc-900/50 py-24">
+      <section id="features" className="bg-surface-alt py-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 mb-4">
@@ -98,10 +99,10 @@ export default function HomePage() {
             {features.map((f) => (
               <div
                 key={f.title}
-                className="bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-violet-200 dark:hover:border-violet-800 transition-colors"
+                className="bg-surface rounded-2xl p-8 border border-border hover:border-primary-200 dark:hover:border-primary-800 transition-colors"
               >
-                <div className="h-12 w-12 bg-violet-50 dark:bg-violet-950/50 rounded-xl flex items-center justify-center mb-6">
-                  <f.icon className="h-6 w-6 text-violet-600" />
+                <div className="h-12 w-12 bg-primary-50 dark:bg-primary-950/50 rounded-xl flex items-center justify-center mb-6">
+                  <f.icon className="h-6 w-6 text-primary-600" />
                 </div>
                 <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 mb-2">{f.title}</h3>
                 <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">{f.description}</p>
@@ -122,7 +123,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-4 gap-6">
             {steps.map((step, i) => (
               <div key={step.title} className="text-center">
-                <div className="h-12 w-12 bg-violet-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                <div className="h-12 w-12 bg-primary-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
                   {i + 1}
                 </div>
                 <h3 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">{step.title}</h3>
@@ -134,17 +135,17 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-violet-600 py-20">
+      <section className="bg-primary-600 py-20">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <h2 className="text-4xl font-bold text-white mb-4">
             Pronto para começar seu projeto?
           </h2>
-          <p className="text-violet-200 text-lg mb-8">
+          <p className="text-primary-200 text-lg mb-8">
             Crie sua conta gratuitamente e gere seu primeiro anteprojeto em minutos.
           </p>
           <Link
             href="/sign-up"
-            className="inline-flex items-center gap-2 bg-white text-violet-700 font-bold px-8 py-4 rounded-xl hover:bg-violet-50 transition-colors text-base"
+            className="inline-flex items-center gap-2 bg-white text-primary-700 font-bold px-8 py-4 rounded-xl hover:bg-primary-50 transition-colors text-base"
           >
             Criar conta gratuita
             <ArrowRight className="h-4 w-4" />
@@ -153,10 +154,10 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-100 dark:border-zinc-800 py-12">
+      <footer className="border-t border-border py-12">
         <div className="mx-auto max-w-7xl px-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
-            <Building2 className="h-5 w-5 text-violet-600" />
+            <Building2 className="h-5 w-5 text-primary-600" />
             <span className="font-bold">ArqIA</span>
           </div>
           <p className="text-sm text-zinc-500">

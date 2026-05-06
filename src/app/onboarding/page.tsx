@@ -1,7 +1,6 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Building2, HardHat, User } from "lucide-react";
 
 type Role = "CLIENT" | "PROFESSIONAL";
@@ -29,13 +28,14 @@ const roles: RoleCard[] = [
 ];
 
 export default function OnboardingPage() {
-  const router = useRouter();
   const [selected, setSelected] = useState<Role | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   async function handleContinue() {
     if (!selected) return;
     setLoading(true);
+    setError("");
     try {
       const res = await fetch("/api/onboarding", {
         method: "POST",
@@ -43,18 +43,24 @@ export default function OnboardingPage() {
         body: JSON.stringify({ role: selected }),
       });
       if (res.ok) {
-        router.push("/dashboard");
+        // Hard reload garante sessão fresca antes de entrar no dashboard
+        window.location.href = "/dashboard";
+      } else {
+        const data = await res.json();
+        setError(data.error ?? "Erro ao salvar. Tente novamente.");
       }
+    } catch {
+      setError("Erro de conexão. Tente novamente.");
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-50 dark:bg-zinc-950 p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-background p-6">
       <div className="w-full max-w-lg">
         <div className="flex items-center gap-2 mb-10 justify-center">
-          <Building2 className="h-7 w-7 text-violet-600" />
+          <Building2 className="h-7 w-7 text-primary-600" />
           <span className="text-2xl font-bold">ArqIA</span>
         </div>
         <h1 className="text-3xl font-bold text-center mb-2 text-zinc-900 dark:text-zinc-50">
@@ -70,13 +76,13 @@ export default function OnboardingPage() {
               onClick={() => setSelected(role)}
               className={`p-6 rounded-2xl border-2 text-left transition-all ${
                 selected === role
-                  ? "border-violet-600 bg-violet-50 dark:bg-violet-950/30"
-                  : "border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:border-zinc-300 dark:hover:border-zinc-600"
+                  ? "border-primary-600 bg-primary-50 dark:bg-primary-950/30"
+                  : "border-border bg-surface hover:border-zinc-300 dark:hover:border-zinc-600"
               }`}
             >
               <Icon
                 className={`h-8 w-8 mb-3 ${
-                  selected === role ? "text-violet-600" : "text-zinc-500"
+                  selected === role ? "text-primary-600" : "text-zinc-500"
                 }`}
               />
               <div className="font-semibold text-zinc-900 dark:text-zinc-50 mb-1">{title}</div>
@@ -87,10 +93,11 @@ export default function OnboardingPage() {
         <button
           onClick={handleContinue}
           disabled={!selected || loading}
-          className="w-full bg-violet-600 hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-xl transition-colors"
+          className="w-full bg-primary-600 hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-xl transition-colors"
         >
           {loading ? "Configurando..." : "Continuar"}
         </button>
+        {error && <p className="text-sm text-red-500 text-center mt-3">{error}</p>}
       </div>
     </div>
   );
