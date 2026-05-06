@@ -1,4 +1,5 @@
-﻿import { db } from "@/lib/db";
+﻿export const dynamic = "force-dynamic";
+import { db } from "@/lib/db";
 import { Star, MapPin, Award } from "lucide-react";
 import Link from "next/link";
 
