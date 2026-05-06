@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { db } from "@/lib/db";
-import type { Project } from "@prisma/client";
 import { FolderOpen, Sparkles, ArrowRight, Clock } from "lucide-react";
 
 export default async function DashboardPage() {
@@ -104,7 +103,7 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <div className="space-y-3">
-            {projects.map((p: Project) => (
+            {projects.map((p: (typeof projects)[number]) => (
               <Link
                 key={p.id}
                 href={`/dashboard/projects/${p.id}`}
