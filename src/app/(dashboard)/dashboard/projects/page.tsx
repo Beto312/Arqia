@@ -73,7 +73,7 @@ export default async function ProjectsPage() {
         </div>
       ) : (
         <div className="grid gap-4">
-          {projects.map((p) => (
+          {projects.map((p: (typeof projects)[number]) => (
             <Link
               key={p.id}
               href={`/dashboard/projects/${p.id}`}
