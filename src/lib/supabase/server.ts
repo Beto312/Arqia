@@ -12,7 +12,7 @@ export async function createClient() {
         getAll() {
           return cookieStore.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet, headers) {
           try {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options)
@@ -20,6 +20,7 @@ export async function createClient() {
           } catch {
             // ignorado em Server Components
           }
+          void headers; // cache headers usados apenas em contextos HTTP
         },
       },
     }
